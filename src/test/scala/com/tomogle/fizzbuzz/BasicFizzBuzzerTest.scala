@@ -1,5 +1,6 @@
 package com.tomogle.fizzbuzz
 
+import com.tomogle.fizzbuzz.FizzBuzz.BasicFizzBuzzer
 import org.scalatest.{FlatSpec, Matchers}
 
 class BasicFizzBuzzerTest extends FlatSpec with Matchers {
