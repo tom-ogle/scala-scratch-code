@@ -24,8 +24,8 @@ class RequestManager(userChecker: ActorRef, userStorage: ActorRef) extends Actor
 
   import akka.pattern.ask
   override def receive: Receive = {
-  case CreateUser(user) =>
-    userChecker ? CheckUser(user) map {
+      case CreateUser(user) =>
+        userChecker ? CheckUser(user) map {
       case GoodUser(goodUser) =>
         println(s"$goodUser was not in blacklist, attempting to add the user to storage")
         userStorage ! AddUser(goodUser)
