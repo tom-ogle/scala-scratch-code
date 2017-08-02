@@ -215,8 +215,153 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
 
   import FunctionalDataStructures.dropWhile
 
-  it should "Drop based on the pridcate" in {
+  it should "Drop based on the predicate" in {
     val result = dropWhile(List(1, 2, 3, 4, 5))(_ <= 3)
     result shouldBe List(4, 5)
   }
+
+  behavior of "append"
+
+  import FunctionalDataStructures.append
+
+  it should "append a List to a List" in {
+    val result = append(List(1, 2, 3, 4), List(5, 6))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  it should "append a List to the empty List" in {
+    val result = append(List(1, 2, 3, 4), Nil)
+    result shouldBe List(1, 2, 3, 4)
+  }
+
+  it should "append a Nil to a List" in {
+    val result = append(Nil, List(5, 6))
+    result shouldBe List(5, 6)
+  }
+
+  it should "append a Nil to Nil" in {
+    val result = append(Nil, Nil)
+    result shouldBe Nil
+  }
+
+  behavior of "append2"
+
+  import FunctionalDataStructures.append2
+
+  it should "append a List to a List" in {
+    val result = append2(List(1, 2, 3, 4), List(5, 6))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  it should "append a List to the empty List" in {
+    val result = append2(List(1, 2, 3, 4), Nil)
+    result shouldBe List(1, 2, 3, 4)
+  }
+
+  it should "append a Nil to a List" in {
+    val result = append2(Nil, List(5, 6))
+    result shouldBe List(5, 6)
+  }
+
+  it should "append a Nil to Nil" in {
+    val result = append2(Nil, Nil)
+    result shouldBe Nil
+  }
+
+  behavior of "append2"
+
+  import FunctionalDataStructures.concat
+
+  it should "append a List of Lists" in {
+    val result = concat(List(
+      List(1, 2, 3),
+      List(4),
+      List(5, 6)
+    ))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  it should "append a List of Lists including Nil" in {
+    val result = concat(List(
+      Nil,
+      List(1, 2, 3),
+      Nil,
+      List(4),
+      List(5, 6)
+    ))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  behavior of "plusOne"
+
+  import FunctionalDataStructures.plusOne
+
+  it should "add one to the elements of a List" in {
+    val result = plusOne(List(1, 2, 3, 4, 5))
+    result shouldBe List(2, 3, 4, 5, 6)
+  }
+
+  behavior of "doubleToString"
+
+  import FunctionalDataStructures.doubleToString
+
+  it should "convert Double to String" in {
+    val result = doubleToString(List(1.1, 2.2, 3.3, 4.4, 5.5))
+    result shouldBe List("1.1", "2.2", "3.3", "4.4", "5.5")
+  }
+
+  behavior of "map"
+
+  import FunctionalDataStructures.map
+
+  it should "apply a function to every element of a List" in {
+    val result = map(List(1.1, 2.2, 3.3, 4.4, 5.5))(_.toString)
+    result shouldBe List("1.1", "2.2", "3.3", "4.4", "5.5")
+  }
+
+  behavior of "filter"
+
+  import FunctionalDataStructures.filter
+
+  it should "apply a function to filter the elements of a List" in {
+    val result = filter(List(1, 2, 3, 4, 5, 6))(_ % 2 == 0)
+    result shouldBe List(2, 4, 6)
+  }
+
+  behavior of "flatMap"
+
+  import FunctionalDataStructures.flatMap
+
+  it should "apply a function to every element of a List" in {
+    val result = flatMap(List(1, 2, 3, 4, 5, 6))(i => List(i, i))
+    result shouldBe List(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6)
+  }
+
+  behavior of "filter2"
+
+  import FunctionalDataStructures.filter2
+
+  it should "apply a function to filter the elements of a List" in {
+    val result = filter2(List(1, 2, 3, 4, 5, 6))(_ % 2 == 0)
+    result shouldBe List(2, 4, 6)
+  }
+
+  behavior of "sumCorrespondingElements"
+
+  import FunctionalDataStructures.sumCorrespondingElements
+
+  it should "sum corresponding elements in two Lists" in {
+    val result = sumCorrespondingElements(List(1, 2, 3, 4, 5, 6), List(6, 5, 4, 3, 2, 1))
+    result shouldBe List(7, 7, 7, 7, 7, 7)
+  }
+
+  behavior of "zipWith"
+
+  import FunctionalDataStructures.zipWith
+
+  it should "zip corresponding elements in two Lists" in {
+    val result = zipWith(List(1, 2, 3, 4, 5, 6), List("6", "5", "4", "3", "2", "1"))(_ + _)
+    result shouldBe List("16", "25", "34", "43", "52", "61")
+  }
+
 }

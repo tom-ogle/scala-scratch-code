@@ -84,4 +84,54 @@ object FunctionalDataStructures {
     case h :: t => if (f(h)) dropWhile(t)(f) else h :: t
   }
 
+  // append in terms of foldLeft
+  def append[A](xs: List[A], ys: List[A]): List[A] = foldLeft(reverse(xs), ys)((b, a) => a :: b)
+
+  // append in terms of foldLeft
+  def append2[A](xs: List[A], ys: List[A]): List[A] = foldRight(xs, ys)((a, b) => a :: b)
+
+  def concat[A](xs: List[List[A]]): List[A] = foldRight[List[A], List[A]](xs, Nil)((a, b) => append2(a, b))
+
+  def plusOne(ls: List[Int]): List[Int] = ls match {
+    case Nil => Nil
+    case h :: t => h + 1 :: plusOne(t)
+  }
+
+  def doubleToString(ls: List[Double]): List[String] = ls match {
+    case Nil => Nil
+    case h :: t => h.toString :: doubleToString(t)
+  }
+
+  def map[A, B](as: List[A])(f: A => B): List[B] = as match {
+    case Nil => Nil
+    case h :: t => f(h) :: map(t)(f)
+  }
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = as match {
+    case Nil => Nil
+    case h :: t => if (f(h)) h :: filter(t)(f) else filter(t)(f)
+  }
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = as match {
+    case Nil => Nil
+    case h :: t => append(f(h), flatMap(t)(f))
+  }
+
+  // filter in terms of flatMap
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] = flatMap[A, A](as)(a => {
+    if (f(a)) List(a) else Nil
+  })
+
+  def sumCorrespondingElements(as: List[Int], bs: List[Int]): List[Int] = (as, bs) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => h1 + h2 :: sumCorrespondingElements(t1, t2)
+  }
+
+  def zipWith[A, B, C](as: List[A], bs: List[B])(f: (A, B) => C): List[C] = (as, bs) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => f(h1, h2) :: zipWith(t1, t2)(f)
+  }
+
 }
