@@ -92,6 +92,18 @@ object FunctionalDataStructures {
 
   def concat[A](xs: List[List[A]]): List[A] = foldRight[List[A], List[A]](xs, Nil)((a, b) => append2(a, b))
 
+  // concat implemented directly with more efficient runtime
+  def concat2[A](xs: List[List[A]]): List[A] = {
+    println("Looping")
+    xs match {
+      case Nil => Nil
+      case h1 :: t1 => h1 match {
+        case Nil => concat2(t1)
+        case h2 :: t2 => h2 :: concat2(t2 :: t1)
+      }
+    }
+  }
+
   def plusOne(ls: List[Int]): List[Int] = ls match {
     case Nil => Nil
     case h :: t => h + 1 :: plusOne(t)

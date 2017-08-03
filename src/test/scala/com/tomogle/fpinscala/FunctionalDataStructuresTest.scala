@@ -268,7 +268,7 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
     result shouldBe Nil
   }
 
-  behavior of "append2"
+  behavior of "concat"
 
   import FunctionalDataStructures.concat
 
@@ -283,6 +283,30 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
 
   it should "append a List of Lists including Nil" in {
     val result = concat(List(
+      Nil,
+      List(1, 2, 3),
+      Nil,
+      List(4),
+      List(5, 6)
+    ))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  behavior of "concat2"
+
+  import FunctionalDataStructures.concat2
+
+  it should "append a List of Lists" in {
+    val result = concat2(List(
+      List(1, 2, 3),
+      List(4),
+      List(5, 6)
+    ))
+    result shouldBe List(1, 2, 3, 4, 5, 6)
+  }
+
+  it should "append a List of Lists including Nil" in {
+    val result = concat2(List(
       Nil,
       List(1, 2, 3),
       Nil,
