@@ -388,4 +388,43 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
     result shouldBe List("16", "25", "34", "43", "52", "61")
   }
 
+  behavior of "hasSubsequence"
+
+  import FunctionalDataStructures.hasSubsequence
+
+  it should "Be true when there is a subsequence at the start" in {
+    val result = hasSubsequence(List(1, 2, 3, 4, 5, 6, 7), List(1))
+    result shouldBe true
+  }
+
+  it should "Be true when there is a subsequence in the middle" in {
+    val result = hasSubsequence(List(1, 2, 3, 4, 5, 6, 7), List(3, 4, 5))
+    result shouldBe true
+  }
+
+  it should "Be true when there is a subsequence at the end" in {
+    val result = hasSubsequence(List(1, 2, 3, 4, 5, 6, 7), List(6, 7))
+    result shouldBe true
+  }
+
+  it should "Be false when there is not a subsequence" in {
+    val result = hasSubsequence(List(1, 2, 3, 4, 5, 6, 7), List(3, 4, 6))
+    result shouldBe false
+  }
+
+  it should "Be true when they are both the empty List" in {
+    val result = hasSubsequence(Nil, Nil)
+    result shouldBe true
+  }
+
+  it should "Be true when the subsequence is the empty List" in {
+    val result = hasSubsequence(List(1, 2, 3), Nil)
+    result shouldBe true
+  }
+
+  it should "Be false when the full sequence is the empty List and the subsequence has elements" in {
+    val result = hasSubsequence(Nil, List(1, 2))
+    result shouldBe false
+  }
+
 }

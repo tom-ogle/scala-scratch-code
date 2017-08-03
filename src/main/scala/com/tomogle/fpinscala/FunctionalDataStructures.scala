@@ -146,4 +146,26 @@ object FunctionalDataStructures {
     case (h1 :: t1, h2 :: t2) => f(h1, h2) :: zipWith(t1, t2)(f)
   }
 
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+
+    def loop(ls: List[A], subls: List[A]): Boolean = (ls, subls) match {
+      case (Nil, Nil) => true
+      case (Nil, _) => false
+      case (_, Nil) => true
+      case (h1 :: t1, h2 :: t2) if h1 == h2 => loop(t1, t2)
+      case _ => false
+    }
+    if (sup == Nil && sub == Nil) true
+    else
+      sup match {
+        case Nil => false
+        case h :: t =>
+          val thisResult = loop(sup, sub)
+          if (thisResult) true
+          else hasSubsequence(t, sub)
+      }
+  }
+
+
+
 }
