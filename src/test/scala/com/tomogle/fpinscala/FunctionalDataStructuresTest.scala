@@ -1,5 +1,7 @@
 package com.tomogle.fpinscala
 
+import com.tomogle.fpinscala.FunctionalDataStructures.Branch
+import com.tomogle.fpinscala.FunctionalDataStructures.Leaf
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
@@ -425,6 +427,15 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
   it should "Be false when the full sequence is the empty List and the subsequence has elements" in {
     val result = hasSubsequence(Nil, List(1, 2))
     result shouldBe false
+  }
+
+  behavior of "sizeOfTree"
+
+  import FunctionalDataStructures.sizeOfTree
+
+  it should "give correct size" in {
+    val result = sizeOfTree(Branch(Leaf(""), Branch(Leaf(""), Leaf(""))))
+    result shouldBe 5
   }
 
 }
