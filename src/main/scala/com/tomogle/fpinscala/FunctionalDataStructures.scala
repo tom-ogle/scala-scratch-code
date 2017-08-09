@@ -175,5 +175,25 @@ object FunctionalDataStructures {
     case Branch(left, right) => 1 + sizeOfTree(left) + sizeOfTree(right)
   }
 
+  def maximumTreeValue(tree: Tree[Int]): Option[Int] = {
+
+    def loop(tr: Tree[Int], maxSoFar: Option[Int]): Option[Int] = tr match {
+      case Leaf(value) =>
+        (maxSoFar, value) match {
+          case (None, _) => Some(value)
+          case (Some(x), y) => Some(x max y)
+        }
+      case Branch(left, right) =>
+        val maxLeft = loop(left, maxSoFar)
+        val maxRight = loop(right, maxSoFar)
+        (maxLeft, maxRight) match {
+          case (None, _) => maxRight
+          case (_, None) => maxRight
+          case (Some(x), Some(y)) => Some(x max y)
+        }
+    }
+    loop(tree, None)
+  }
+
 
 }

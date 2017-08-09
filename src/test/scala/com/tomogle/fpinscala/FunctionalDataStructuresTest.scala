@@ -438,4 +438,13 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
     result shouldBe 5
   }
 
+  behavior of "maximumTreeValue"
+
+  import FunctionalDataStructures.maximumTreeValue
+
+  it should "give the maximum value" in {
+    val result = maximumTreeValue(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))
+    result shouldBe Some(6)
+  }
+
 }
