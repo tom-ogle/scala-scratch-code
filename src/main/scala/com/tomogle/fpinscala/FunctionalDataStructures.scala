@@ -175,7 +175,7 @@ object FunctionalDataStructures {
     case Branch(left, right) => 1 + sizeOfTree(left) + sizeOfTree(right)
   }
 
-  def maximumTreeValue(tree: Tree[Int]): Option[Int] = {
+  def maxTreeValue(tree: Tree[Int]): Option[Int] = {
 
     def loop(tr: Tree[Int], maxSoFar: Option[Int]): Option[Int] = tr match {
       case Leaf(value) =>
@@ -193,6 +193,22 @@ object FunctionalDataStructures {
         }
     }
     loop(tree, None)
+  }
+
+  def maxTreeDepth[A](tree: Tree[A]): Int = {
+
+    def loop(tr: Tree[A], depthUntilNow: Int): Int = {
+      val depthAtThisLevel = depthUntilNow + 1
+      tr match {
+        case Leaf(_) => depthAtThisLevel
+        case Branch(left, right) =>
+
+          val depthLeft = loop(left, depthAtThisLevel)
+          val depthRight = loop(right, depthAtThisLevel)
+          depthLeft max depthRight
+      }
+    }
+    loop(tree, 0)
   }
 
 
