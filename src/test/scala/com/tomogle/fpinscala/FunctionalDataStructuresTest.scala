@@ -16,10 +16,6 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
     result shouldBe "1230"
   }
 
-  it should "" in {
-    val r = List("1", "2", "3").foldRight("0")(_ + _)
-  }
-
   behavior of "foldRight2"
 
   import FunctionalDataStructures.foldRight2
@@ -444,7 +440,7 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
 
   it should "give the maximum value" in {
     val result = maxTreeValue(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))
-    result shouldBe Some(6)
+    result shouldBe 6
   }
 
   behavior of "maxTreeDepth"
@@ -454,6 +450,51 @@ class FunctionalDataStructuresTest extends FlatSpec with Matchers {
   it should "give the maximum depth in the tree" in {
     val result = maxTreeDepth(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))
     result shouldBe 5
+  }
+
+  behavior of "mapTree"
+
+  import FunctionalDataStructures.mapTree
+
+  it should "apply a function to every element of a tree" in {
+    val result = mapTree(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))(_ + 2)
+    result shouldBe Branch(Leaf(1), Branch(Branch(Leaf(4), Branch(Leaf(6), Leaf(8))), Leaf(2)))
+  }
+
+  behavior of "sizeOfTree2"
+
+  import FunctionalDataStructures.sizeOfTree2
+
+  it should "give correct size" in {
+    val result = sizeOfTree2(Branch(Leaf(""), Branch(Leaf(""), Leaf(""))))
+    result shouldBe 5
+  }
+
+  behavior of "maxTreeValue2"
+
+  import FunctionalDataStructures.maxTreeValue2
+
+  it should "give the maximum value" in {
+    val result = maxTreeValue2(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))
+    result shouldBe 6
+  }
+
+  behavior of "maxTreeDepth2"
+
+  import FunctionalDataStructures.maxTreeDepth2
+
+  it should "give the maximum depth in the tree" in {
+    val result = maxTreeDepth2(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))
+    result shouldBe 5
+  }
+
+  behavior of "mapTree2"
+
+  import FunctionalDataStructures.mapTree2
+
+  it should "apply a function to every element of a tree" in {
+    val result = mapTree2(Branch(Leaf(-1), Branch(Branch(Leaf(2), Branch(Leaf(4), Leaf(6))), Leaf(0))))(_ + 2)
+    result shouldBe Branch(Leaf(1), Branch(Branch(Leaf(4), Branch(Leaf(6), Leaf(8))), Leaf(2)))
   }
 
 }

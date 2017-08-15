@@ -175,41 +175,46 @@ object FunctionalDataStructures {
     case Branch(left, right) => 1 + sizeOfTree(left) + sizeOfTree(right)
   }
 
-  def maxTreeValue(tree: Tree[Int]): Option[Int] = {
-
-    def loop(tr: Tree[Int], maxSoFar: Option[Int]): Option[Int] = tr match {
-      case Leaf(value) =>
-        (maxSoFar, value) match {
-          case (None, _) => Some(value)
-          case (Some(x), y) => Some(x max y)
-        }
-      case Branch(left, right) =>
-        val maxLeft = loop(left, maxSoFar)
-        val maxRight = loop(right, maxSoFar)
-        (maxLeft, maxRight) match {
-          case (None, _) => maxRight
-          case (_, None) => maxRight
-          case (Some(x), Some(y)) => Some(x max y)
-        }
-    }
-    loop(tree, None)
+  def maxTreeValue(tree: Tree[Int]): Int = tree match {
+    case Leaf(value) => value
+    case Branch(left, right) => maxTreeValue(left) max maxTreeValue(right)
   }
 
-  def maxTreeDepth[A](tree: Tree[A]): Int = {
-
-    def loop(tr: Tree[A], depthUntilNow: Int): Int = {
-      val depthAtThisLevel = depthUntilNow + 1
-      tr match {
-        case Leaf(_) => depthAtThisLevel
-        case Branch(left, right) =>
-
-          val depthLeft = loop(left, depthAtThisLevel)
-          val depthRight = loop(right, depthAtThisLevel)
-          depthLeft max depthRight
-      }
-    }
-    loop(tree, 0)
+  def maxTreeDepth[A](tree: Tree[A]): Int = tree match {
+    case Leaf(value) => 1
+    case Branch(left, right) => (maxTreeDepth(left) max maxTreeDepth(right)) + 1
   }
 
+  def mapTree[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
+    case Leaf(value) => Leaf(f(value))
+    case Branch(left, right) =>
+      Branch(mapTree(left)(f), mapTree(right)(f))
+  }
+
+  def foldTree[A, B](tree: Tree[A], z: A => B)(f: (Tree[A], Tree[A]) => B): B = tree match {
+    case Leaf(value) => z(value)
+    case Branch(left, right) => f(left, right)
+  }
+
+  def sizeOfTree2[A](tree: Tree[A]): Int = foldTree(tree, {_: A => 1}) {
+    (left, right) => 1 + sizeOfTree2(left) + sizeOfTree2(right)
+  }
+
+  def maxTreeValue2(tree: Tree[Int]): Int = foldTree(tree, (value: Int) => value) {
+    (left, right) => maxTreeValue2(left) max maxTreeValue2(right)
+  }
+
+  def maxTreeDepth2[A](tree: Tree[A]): Int =
+    foldTree(tree, {_: A => 1}) {
+      (left, right) => (maxTreeDepth2(left) max maxTreeDepth2(right)) + 1
+    }
+
+  def mapTree2[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
+    val zFunc: A => Tree[B] = value => Leaf(f(value))
+
+    foldTree(tree, zFunc) {
+      (left, right) => Branch[B](mapTree2(left)(f), mapTree2(right)(f))
+    }
+  }
 
 }
